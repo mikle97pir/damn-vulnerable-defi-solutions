@@ -95,6 +95,9 @@ describe('[Challenge] Puppet', function () {
     });
 
     it('Execution', async function () {
+        // There is not much liquidity on Uniswap
+        // We can sell all our tokens on Uniswap to manipulate the price
+        // Then we can borrow all the tokens from the lending pool with a small collateral
         attackerFactory = await ethers.getContractFactory('PuppetPoolAttacker', player);
         attackerAddress = getContractAddress({
             from: player.address,
