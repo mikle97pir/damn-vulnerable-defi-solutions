@@ -45,7 +45,9 @@ describe('[Challenge] Backdoor', function () {
     });
 
     it('Execution', async function () {
-        /** CODE YOUR SOLUTION HERE */
+        // The setup function in GnosisSafe allows to run an arbitrary delegate call during the creation of the contract
+        // We will create wallets on behalf of the users and approve transfer of all funds to us in the delegate call
+        attacker = await (await ethers.getContractFactory('BackdoorAttacker', player)).deploy(walletRegistry.address, users);
     });
 
     after(async function () {
