@@ -57,7 +57,15 @@ describe('[Challenge] Climber', function () {
     });
 
     it('Execution', async function () {
-        /** CODE YOUR SOLUTION HERE */
+        // execute function in ClimberTimelock is vulnerable
+        // it runs the tasks first, then checks if they are scheduled
+        // also the ClimberTimelock contract is allowed to grant roles in itself
+        // so we can run whatever we want, grant PROPOSER role to our contract and schedule the necessary sequence of tasks afterwards
+        // all in one transaction
+        // the tasks: remove delay, grant PROPOSER role to our contract, upgrade the vault to BadClimberVault, schedule the tasks
+        // then just drain the vault using the function from BadClimberVault
+        attacker = await (await ethers.getContractFactory('ClimberAttacker', player)).deploy(vault.address, token.address);
+        await attacker.attack();
     });
 
     after(async function () {
