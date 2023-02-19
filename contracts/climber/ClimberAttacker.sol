@@ -28,7 +28,7 @@ contract ClimberAttacker{
         timelock = ClimberTimelock(payable(
             vault.owner()
         ));
-        
+
         token = IERC20(_token);
 
     }
@@ -71,4 +71,5 @@ contract ClimberAttacker{
     function scheduleTimelockOperation() public {
         timelock.schedule(targets, values, dataElements, 0);
     }
+    
 }
