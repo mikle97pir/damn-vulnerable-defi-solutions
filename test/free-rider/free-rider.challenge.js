@@ -105,6 +105,7 @@ describe('[Challenge] Free Rider', function () {
     });
 
     it('Execution', async function () {
+
         // _buyOne function in FreeRiderNFTMarketplace contract is flawed
         // it sends the NFT from the seller to the buyer
         // and then sends money to the owner of the NFT (buyer already)
@@ -113,8 +114,15 @@ describe('[Challenge] Free Rider', function () {
         // then msg.value can still be smaller than their combined price
         // Uniswap flash swaps work like flash loans
         // we can get all the NFTs for free and also receive free money from the exchange!
-        attacker = await (await ethers.getContractFactory('FreeRiderAttacker', player)).deploy(deployer.address, marketplace.address, devsContract.address, uniswapPair.address);
+
+        attacker = await (await ethers.getContractFactory('FreeRiderAttacker', player)).deploy(
+            deployer.address, 
+            marketplace.address, 
+            devsContract.address, 
+            uniswapPair.address
+        );
         await attacker.attack([0, 1, 2, 3, 4, 5]);
+
     });
 
     after(async function () {

