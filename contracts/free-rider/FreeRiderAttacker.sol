@@ -22,18 +22,22 @@ contract FreeRiderAttacker is IERC721Receiver {
     uint256 public constant NFT_PRICE_WITH_FEE = (NFT_PRICE * 1000)/997 + 1;
  
     constructor(address _deployer, address payable _marketplace, address _recovery, address _uniswapPair) {
+
         player = msg.sender;
         deployer = _deployer;
         marketplace = FreeRiderNFTMarketplace(_marketplace);
         recovery = FreeRiderRecovery(_recovery);
         uniswapPair = IUniswapV2Pair(_uniswapPair);
         nft = marketplace.token();
+
         weth = WETH(payable(
             uniswapPair.token0()
         ));
+        
         token = DamnValuableToken(
             uniswapPair.token1()
         );
+        
     }
 
     function attack(uint[] calldata ids) public {
