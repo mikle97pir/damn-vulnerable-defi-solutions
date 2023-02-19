@@ -7,11 +7,9 @@ import "./WalletDeployer.sol";
 import "./AuthorizerUpgradeable.sol";
 
 contract BadAuthorizerUpgradeable is AuthorizerUpgradeable {
-
     function die(address player) public {
         selfdestruct(payable(player));
     }
-
 }
 
 contract WalletMiningAttacker {

