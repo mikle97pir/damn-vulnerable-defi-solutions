@@ -135,7 +135,9 @@ describe('[Challenge] Wallet mining', function () {
             authorizer.address, 
             IMPLEMENTATION_SLOT
         );
-        implementationAddress = ethers.utils.getAddress("0x" + implementationSlotValue.slice(-40).toString("hex"));
+        implementationAddress = ethers.utils.getAddress(
+            "0x" + implementationSlotValue.slice(-40).toString("hex")
+        );
         authorizerImplmentation = await ethers.getContractAt(
             "AuthorizerUpgradeable", 
             implementationAddress 
