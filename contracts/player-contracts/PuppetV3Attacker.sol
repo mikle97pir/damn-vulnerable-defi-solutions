@@ -2,7 +2,7 @@
 pragma solidity >=0.7.6;
 pragma abicoder v2;
 
-import "./PuppetV3Pool.sol";
+import "../puppet-v3/PuppetV3Pool.sol";
 import '@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
 
 contract PuppetV3Attacker {

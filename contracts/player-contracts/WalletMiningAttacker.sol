@@ -3,8 +3,8 @@ pragma solidity ^0.8.4;
 
 import "@gnosis.pm/safe-contracts/contracts/proxies/GnosisSafeProxyFactory.sol";
 import "@gnosis.pm/safe-contracts/contracts/GnosisSafe.sol";
-import "./WalletDeployer.sol";
-import "./AuthorizerUpgradeable.sol";
+import "../wallet-mining/WalletDeployer.sol";
+import "../wallet-mining/AuthorizerUpgradeable.sol";
 
 contract BadAuthorizerUpgradeable is AuthorizerUpgradeable {
     function selfDestruct(address player) public {

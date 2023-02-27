@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./ClimberVault.sol";
+import "../climber/ClimberVault.sol";
 
 contract BadClimberVault is ClimberVault {
     function drain(IERC20 token, address recepient) public {

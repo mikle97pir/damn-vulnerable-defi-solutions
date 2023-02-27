@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./SimpleGovernance.sol";
-import "./SelfiePool.sol";
+import "../selfie/SimpleGovernance.sol";
+import "../selfie/SelfiePool.sol";
 import "@openzeppelin/contracts/interfaces/IERC3156FlashBorrower.sol";
 
 contract SelfieAttacker is IERC3156FlashBorrower{

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./FreeRiderNFTMarketplace.sol";
-import "./FreeRiderRecovery.sol";
+import "../free-rider/FreeRiderNFTMarketplace.sol";
+import "../free-rider/FreeRiderRecovery.sol";
 import "../DamnValuableToken.sol";
 import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
 import "solmate/src/tokens/WETH.sol";

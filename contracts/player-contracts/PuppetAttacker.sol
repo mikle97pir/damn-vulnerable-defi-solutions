@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./PuppetPool.sol";
+import "../puppet/PuppetPool.sol";
 
 interface IUniswapV1Exchange {
     function tokenToEthTransferInput(
@@ -12,7 +12,7 @@ interface IUniswapV1Exchange {
     ) external returns (uint256);
 }
 
-contract PuppetPoolAttacker {
+contract PuppetAttacker {
 
     PuppetPool public immutable pool;
     IUniswapV1Exchange public immutable exchange;

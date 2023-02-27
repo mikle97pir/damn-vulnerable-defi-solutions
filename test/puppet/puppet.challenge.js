@@ -101,7 +101,7 @@ describe('[Challenge] Puppet', function () {
         // Then we can borrow all the tokens from the lending pool with a small collateral
         // To make it in one transaction, we use permit function of the token (ERC-2612)
 
-        attackerFactory = await ethers.getContractFactory('PuppetPoolAttacker', player);
+        attackerFactory = await ethers.getContractFactory('PuppetAttacker', player);
 
         attackerAddress = ethers.utils.getContractAddress({
             from: player.address,

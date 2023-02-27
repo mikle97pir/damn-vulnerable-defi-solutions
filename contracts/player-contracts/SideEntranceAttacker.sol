@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-import "./SideEntranceLenderPool.sol";
+import "../side-entrance/SideEntranceLenderPool.sol";
 
 contract SideEntranceAttacker is IFlashLoanEtherReceiver {
 
