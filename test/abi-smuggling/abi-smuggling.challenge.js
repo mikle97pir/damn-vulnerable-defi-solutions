@@ -135,7 +135,11 @@ describe('[Challenge] ABI smuggling', function () {
         // ]
         smuggledSweep = chunks.join('');
         
-        await player.sendTransaction({to: vault.address, data: smuggledSweep, gasLimit: 100500});
+        await player.sendTransaction({
+            to: vault.address,
+            data: smuggledSweep, 
+            gasLimit: 100500
+        });
 
     });
 
