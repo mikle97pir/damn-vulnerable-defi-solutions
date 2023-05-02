@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>damn-vulnerable-defi-solutions | My solutions to the Damn Vulnerable DeFi V3 challenges.</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="damn-vulnerable-defi-solutions" />
+<meta name="google-site-verification" content="BOlMfB9YShavD9z2pFu-GUi6gf_7HelUpIqGc0TOtNs" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My solutions to the Damn Vulnerable DeFi V3 challenges." />
+<meta property="og:description" content="My solutions to the Damn Vulnerable DeFi V3 challenges." />
+<link rel="canonical" href="https://mikle97pir.github.io/damn-vulnerable-defi-solutions/" />
+<meta property="og:url" content="https://mikle97pir.github.io/damn-vulnerable-defi-solutions/" />
+<meta property="og:site_name" content="damn-vulnerable-defi-solutions" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="damn-vulnerable-defi-solutions" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","description":"My solutions to the Damn Vulnerable DeFi V3 challenges.","headline":"damn-vulnerable-defi-solutions","name":"damn-vulnerable-defi-solutions","url":"https://mikle97pir.github.io/damn-vulnerable-defi-solutions/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/damn-vulnerable-defi-solutions/assets/css/style.css?v=9e4e0c1fc92d0f187c9a3aa25b617a8153e15ded">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/damn-vulnerable-defi-solutions/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="https://mikle97pir.github.io/damn-vulnerable-defi-solutions/">damn-vulnerable-defi-solutions</a></h1>
+      
+
+      <p><img src="/damn-vulnerable-defi-solutions/cover.png" alt="" /></p>
+
+<h1 id="damn-vulnerable-defi-v3-solutions">Damn Vulnerable DeFi V3 Solutions</h1>
+
+<p>The <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/tree/v3.0.0-solutions"><code class="language-plaintext highlighter-rouge">v3.0.0-solutions</code></a> branch of this repository contains my solutions to the <a href="https://damnvulnerabledefi.xyz">Damn Vulnerable DeFi V3</a> challenges. All solutions have a JavaScript part located in the <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/tree/v3.0.0-solutions/test"><code class="language-plaintext highlighter-rouge">test</code></a> folder. Some of them also include an attacker smart contract at <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/tree/v3.0.0-solutions/contracts/player-contracts"><code class="language-plaintext highlighter-rouge">contracts/player-contracts</code></a>. There are decent walkthroughs available for the previous version of Damn Vulnerable DeFi (e.g. <a href="https://github.com/0xJuancito/damn-vulnerable-defi-solutions">this one</a> by <a href="https://github.com/0xJuancito">0xJuancito</a>), so I will write here only about the new stuff. However, there are comments in the code for all the problems.</p>
+
+<h2 id="table-of-contents">Table of Contents</h2>
+
+<ol>
+  <li><a href="#1-unstoppable">Unstoppable</a></li>
+  <li><a href="#2-naive-receiver">Naive receiver</a></li>
+  <li><a href="#3-truster">Truster</a></li>
+  <li><a href="#4-side-entrance">Side Entrance</a></li>
+  <li><a href="#5-the-rewarder">The Rewarder</a></li>
+  <li><a href="#6-selfie">Selfie</a></li>
+  <li><a href="#7-compromised">Compromised</a></li>
+  <li><a href="#8-puppet">Puppet</a></li>
+  <li><a href="#9-puppet-v2">Puppet V2</a></li>
+  <li><a href="#10-free-rider">Free Rider</a></li>
+  <li><a href="#11-backdoor">Backdoor</a></li>
+  <li><a href="#12-climber">Climber</a></li>
+  <li><a href="#13-wallet-mining">Wallet Mining</a></li>
+  <li><a href="#14-puppet-v3">Puppet V3</a></li>
+  <li><a href="#15-abi-smuggling">ABI Smuggling</a></li>
+</ol>
+
+<hr />
+
+<h3 id="1-unstoppable"><strong>1. Unstoppable</strong></h3>
+
+<p>no important changes since V2</p>
+
+<p>Javascript: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/unstoppable/unstoppable.challenge.js">test/unstoppable/unstoppable.challenge.js</a></p>
+
+<h3 id="2-naive-receiver"><strong>2. Naive receiver</strong></h3>
+
+<p>no important changes since V2</p>
+
+<p>Javascript: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/naive-receiver/naive-receiver.challenge.js">test/naive-receiver/naive-receiver.challenge.js</a></p>
+
+<h3 id="3-truster"><strong>3. Truster</strong></h3>
+
+<p>no important changes since V2</p>
+
+<p>Javascript: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/truster/truster.challenge.js">test/truster/truster.challenge.js</a></p>
+
+<h3 id="4-side-entrance"><strong>4. Side Entrance</strong></h3>
+
+<p>no important changes since V2</p>
+
+<p>Javascript: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/side-entrance/side-entrance.challenge.js">test/side-entrance/side-entrance.challenge.js</a></p>
+
+<p>Attacker smart contract: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/contracts/player-contracts/SideEntranceAttacker.sol">contracts/player-contracts/SideEntranceAttacker.sol</a></p>
+
+<h3 id="5-the-rewarder"><strong>5. The Rewarder</strong></h3>
+
+<p>no important changes since V2</p>
+
+<p>Javascript: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/the-rewarder/the-rewarder.challenge.js">test/the-rewarder/the-rewarder.challenge.js</a></p>
+
+<p>Attacker smart contract: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/contracts/player-contracts/TheRewarderAttacker.sol">contracts/player-contracts/TheRewarderAttacker.sol</a></p>
+
+<h3 id="6-selfie"><strong>6. Selfie</strong></h3>
+
+<p>no important changes since V2</p>
+
+<p>Javascript: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/selfie/selfie.challenge.js">test/selfie/selfie.challenge.js</a></p>
+
+<p>Attacker smart contract: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/contracts/player-contracts/SelfieAttacker.sol">contracts/player-contracts/SelfieAttacker.sol</a></p>
+
+<h3 id="7-compromised"><strong>7. Compromised</strong></h3>
+
+<p>no important changes since V2</p>
+
+<p>Javascript: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/compromised/compromised.challenge.js">test/compromised/compromised.challenge.js</a></p>
+<h3 id="8-puppet"><strong>8. Puppet</strong></h3>
+
+<p>In V3, the Puppet challenge can be solved in one transaction since the token used in the challenge is now compliant with the <a href="https://eips.ethereum.org/EIPS/eip-2612">ERC-2612</a> standard. This standard introduces a <code class="language-plaintext highlighter-rouge">permit</code> function that enables users to change the allowance at the token on behalf of someone else using a precooked signature. Therefore, an extra transaction to call <code class="language-plaintext highlighter-rouge">approve</code> is not needed.</p>
+
+<p>Javascript: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/puppet/puppet.challenge.js">test/puppet/puppet.challenge.js</a></p>
+
+<p>Attacker smart contract: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/contracts/player-contracts/PuppetAttacker.sol">contracts/player-contracts/PuppetAttacker.sol</a></p>
+<h3 id="9-puppet-v2"><strong>9. Puppet V2</strong></h3>
+
+<p>no important changes since V2</p>
+
+<p>Javascript: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/puppet-v2/puppet-v2.challenge.js">test/puppet-v2/puppet-v2.challenge.js</a></p>
+
+<p>Attacker smart contract: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/contracts/player-contracts/PuppetV2Attacker.sol">contracts/player-contracts/PuppetV2Attacker.sol</a></p>
+
+<h3 id="10-free-rider"><strong>10. Free Rider</strong></h3>
+
+<p>no important changes since V2</p>
+
+<p>Javascript: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/free-rider/free-rider.challenge.js">test/free-rider/free-rider.challenge.js</a></p>
+
+<p>Attacker smart contract: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/contracts/player-contracts/FreeRiderAttacker.sol">contracts/player-contracts/FreeRiderAttacker.sol</a></p>
+
+<h3 id="11-backdoor"><strong>11. Backdoor</strong></h3>
+
+<p>no important changes since V2</p>
+
+<p>Javascript: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/backdoor/backdoor.challenge.js">test/backdoor/backdoor.challenge.js</a></p>
+
+<p>Attacker smart contract: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/contracts/player-contracts/BackdoorAttacker.sol">contracts/player-contracts/BackdoorAttacker.sol</a></p>
+
+<h3 id="12-climber"><strong>12. Climber</strong></h3>
+
+<p>no important changes since V2</p>
+
+<p>Javascript: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/climber/climber.challenge.js">test/climber/climber.challenge.js</a></p>
+
+<p>Attacker smart contract: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/contracts/player-contracts/ClimberAttacker.sol">contracts/player-contracts/ClimberAttacker.sol</a></p>
+
+<p>Sure, here is an improved version of that part:</p>
+
+<h3 id="13-wallet-mining"><strong>13. Wallet Mining</strong></h3>
+
+<p>A good walkthrough for the Wallet Mining challenge is available on <a href="https://systemweakness.com/damn-vulnerable-defi-v3-13-wallet-mining-solution-d5147533fa49">Medium</a> by <a href="https://medium.com/@bowenzby">@bowenzby</a>.</p>
+
+<p>This challenge is a replay attack that is similar to <a href="https://mirror.xyz/0xbuidlerdao.eth/lOE5VN-BHI0olGOXe27F0auviIuoSlnou_9t3XRJseY">what happened</a> on Optimism. If you’re tempted to read the solution, I advise you to read that story first and try again.</p>
+
+<p>Javascript: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/wallet-mining/wallet-mining.challenge.js">test/wallet-mining/wallet-mining.challenge.js</a></p>
+
+<p>Attacker smart contract: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/contracts/player-contracts/WalletMiningAttacker.sol">contracts/player-contracts/WalletMiningAttacker.sol</a></p>
+
+<h3 id="14-puppet-v3">14. <strong>Puppet V3</strong></h3>
+
+<p>This is a price manipultation attack similar to the previous Puppets. The main difference is that the price is time averaged, so it is necessary to wait a little after selling the tokens.</p>
+
+<p>Javascript: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/puppet-v3/puppet-v3.challenge.js">test/puppet-v3/puppet-v3.challenge.js</a></p>
+
+<p>Attacker smart contract: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/contracts/player-contracts/PuppetV3Attacker.sol">contracts/player-contracts/PuppetV3Attacker.sol</a></p>
+
+<h3 id="15-abi-smuggling">15. <strong>ABI Smuggling</strong></h3>
+
+<p>There is a very good <a href="https://medium.com/@mattaereal/damnvulnerabledefi-abi-smuggling-challenge-walkthrough-plus-infographic-7098855d49a">walkthrough</a> on Medium by <a href="https://medium.com/@mattaereal">@mattaereal</a>.</p>
+
+<p>Javascript: <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/abi-smuggling/abi-smuggling.challenge.js">test/abi-smuggling/abi-smuggling.challenge.js</a></p>
+<h2 id="disclaimer">Disclaimer</h2>
+
+<p>All Solidity code, practices and patterns in this repository are DAMN VULNERABLE and for educational purposes only.</p>
+
+<p>DO NOT USE IN PRODUCTION.</p>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/mikle97pir/damn-vulnerable-defi-solutions/edit/v3.0.0-solutions/README.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>
