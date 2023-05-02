@@ -140,3 +140,5 @@ Javascript: [test/abi-smuggling/abi-smuggling.challenge.js](https://github.com/m
 All Solidity code, practices and patterns in this repository are DAMN VULNERABLE and for educational purposes only.
 
 DO NOT USE IN PRODUCTION.
+
+<meta name="google-site-verification" content="BOlMfB9YShavD9z2pFu-GUi6gf_7HelUpIqGc0TOtNs" />
