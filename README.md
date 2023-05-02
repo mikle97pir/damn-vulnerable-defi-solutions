@@ -141,3 +141,5 @@ All Solidity code, practices and patterns in this repository are DAMN VULNERABLE
 
 DO NOT USE IN PRODUCTION.
 
+<meta name="google-site-verification" content="p0Nnc9zekRbMtXI8N5nJIh76KzNqvJeByqcCKw1cBbI" />
+
