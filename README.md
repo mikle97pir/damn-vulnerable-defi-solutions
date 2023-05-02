@@ -1,5 +1,9 @@
 ![](cover.png)
 
+<head>
+<meta name="google-site-verification" content="BOlMfB9YShavD9z2pFu-GUi6gf_7HelUpIqGc0TOtNs" />
+</head>
+
 # Damn Vulnerable DeFi V3 Solutions
 
 The [`v3.0.0-solutions`](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/tree/v3.0.0-solutions) branch of this repository contains my solutions to the [Damn Vulnerable DeFi V3](https://damnvulnerabledefi.xyz) challenges. All solutions have a JavaScript part located in the [`test`](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/tree/v3.0.0-solutions/test) folder. Some of them also include an attacker smart contract at [`contracts/player-contracts`](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/tree/v3.0.0-solutions/contracts/player-contracts). There are decent walkthroughs available for the previous version of Damn Vulnerable DeFi (e.g. [this one](https://github.com/0xJuancito/damn-vulnerable-defi-solutions) by [0xJuancito](https://github.com/0xJuancito)), so I will write here only about the new stuff. However, there are comments in the code for all the problems.
@@ -140,5 +144,3 @@ Javascript: [test/abi-smuggling/abi-smuggling.challenge.js](https://github.com/m
 All Solidity code, practices and patterns in this repository are DAMN VULNERABLE and for educational purposes only.
 
 DO NOT USE IN PRODUCTION.
-
-<meta name="google-site-verification" content="BOlMfB9YShavD9z2pFu-GUi6gf_7HelUpIqGc0TOtNs" />
