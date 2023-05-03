@@ -26,25 +26,25 @@ The [`v3.0.0-solutions`](https://github.com/mikle97pir/damn-vulnerable-defi-solu
 
 ### **1. Unstoppable**
 
-no important changes since V2
+no significant changes in the solution since V2
 
 Javascript: [test/unstoppable/unstoppable.challenge.js](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/unstoppable/unstoppable.challenge.js)
 
 ### **2. Naive receiver**
 
-no important changes since V2
+no significant changes in the solution since V2
 
 Javascript: [test/naive-receiver/naive-receiver.challenge.js](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/naive-receiver/naive-receiver.challenge.js)
 
 ### **3. Truster**
 
-no important changes since V2
+no significant changes in the solution since V2
 
 Javascript: [test/truster/truster.challenge.js](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/truster/truster.challenge.js)
 
 ### **4. Side Entrance**
 
-no important changes since V2
+no significant changes in the solution since V2
 
 Javascript: [test/side-entrance/side-entrance.challenge.js](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/side-entrance/side-entrance.challenge.js)
 
@@ -52,7 +52,7 @@ Attacker smart contract: [contracts/player-contracts/SideEntranceAttacker.sol](h
 
 ### **5. The Rewarder**
 
-no important changes since V2
+no significant changes in the solution since V2
 
 Javascript: [test/the-rewarder/the-rewarder.challenge.js](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/the-rewarder/the-rewarder.challenge.js)
 
@@ -60,7 +60,7 @@ Attacker smart contract: [contracts/player-contracts/TheRewarderAttacker.sol](ht
 
 ### **6. Selfie**
 
-no important changes since V2
+no significant changes in the solution since V2
 
 Javascript: [test/selfie/selfie.challenge.js](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/selfie/selfie.challenge.js)
 
@@ -68,7 +68,7 @@ Attacker smart contract: [contracts/player-contracts/SelfieAttacker.sol](https:/
 
 ### **7. Compromised**
 
-no important changes since V2
+no significant changes in the solution since V2
 
 Javascript: [test/compromised/compromised.challenge.js](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/compromised/compromised.challenge.js)
 ### **8. Puppet**
@@ -80,7 +80,7 @@ Javascript: [test/puppet/puppet.challenge.js](https://github.com/mikle97pir/damn
 Attacker smart contract: [contracts/player-contracts/PuppetAttacker.sol](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/contracts/player-contracts/PuppetAttacker.sol)
 ### **9. Puppet V2**
 
-no important changes since V2
+no significant changes in the solution since V2
 
 Javascript: [test/puppet-v2/puppet-v2.challenge.js](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/puppet-v2/puppet-v2.challenge.js)
 
@@ -88,7 +88,7 @@ Attacker smart contract: [contracts/player-contracts/PuppetV2Attacker.sol](https
 
 ### **10. Free Rider**
 
-no important changes since V2
+no significant changes in the solution since V2
 
 Javascript: [test/free-rider/free-rider.challenge.js](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/free-rider/free-rider.challenge.js)
 
@@ -96,7 +96,7 @@ Attacker smart contract: [contracts/player-contracts/FreeRiderAttacker.sol](http
 
 ### **11. Backdoor**
 
-no important changes since V2
+no significant changes in the solution since V2
 
 Javascript: [test/backdoor/backdoor.challenge.js](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/backdoor/backdoor.challenge.js)
 
@@ -104,7 +104,7 @@ Attacker smart contract: [contracts/player-contracts/BackdoorAttacker.sol](https
 
 ### **12. Climber**
 
-no important changes since V2
+no significant changes in the solution since V2
 
 Javascript: [test/climber/climber.challenge.js](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/climber/climber.challenge.js)
 
