@@ -118,7 +118,7 @@ A good walkthrough for the Wallet Mining challenge is available on [Medium](http
 
 This challenge is a replay attack that is similar to [what happened](https://mirror.xyz/0xbuidlerdao.eth/lOE5VN-BHI0olGOXe27F0auviIuoSlnou_9t3XRJseY) on Optimism. If you're tempted to read the solution, I advise you to read that story first and try again.
 
-You will need to enter a Mainnet RPC URL into the [`wallet-mining.challenge.js`](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/wallet-mining/wallet-mining.challenge.js) file.
+You will need to enter a Mainnet RPC URL into the [wallet-mining.challenge.js](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/wallet-mining/wallet-mining.challenge.js) file.
 
 Javascript: [test/wallet-mining/wallet-mining.challenge.js](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/wallet-mining/wallet-mining.challenge.js)
 
@@ -127,6 +127,8 @@ Attacker smart contract: [contracts/player-contracts/WalletMiningAttacker.sol](h
 ### 14. **Puppet V3**
 
 This is a price manipultation attack similar to the previous Puppets. The main difference is that the price is time averaged, so it is necessary to wait a little after selling the tokens.
+
+You will need to enter a Mainnet RPC URL into the [puppet-v3.challenge.js](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/puppet-v3/puppet-v3.challenge.js) file.
 
 Javascript: [test/puppet-v3/puppet-v3.challenge.js](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/test/puppet-v3/puppet-v3.challenge.js)
 
