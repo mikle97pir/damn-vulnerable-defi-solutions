@@ -88,7 +88,7 @@ describe('[Challenge] Wallet mining', function () {
         const MASTER_COPY = "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F";
 
         /** SET RPC URL HERE */
-        const MAINNET_URL = "https://mainnet.infura.io/v3/becb033f3bc54e01b6213b3a4f7665a3";
+        const MAINNET_URL = "Enter your RPC URL here";
         const mainnetProvider = new ethers.providers.JsonRpcProvider(MAINNET_URL);
 
         const transactions = [
