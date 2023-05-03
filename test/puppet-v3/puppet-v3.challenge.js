@@ -26,7 +26,7 @@ describe('[Challenge] Puppet v3', function () {
     let initialBlockTimestamp;
 
     /** SET RPC URL HERE */
-    const MAINNET_FORKING_URL = "https://mainnet.infura.io/v3/becb033f3bc54e01b6213b3a4f7665a3";
+    const MAINNET_FORKING_URL = "<enter your RPC URL here>";
 
     // Initial liquidity amounts for Uniswap v3 pool
     const UNISWAP_INITIAL_TOKEN_LIQUIDITY = 100n * 10n ** 18n;

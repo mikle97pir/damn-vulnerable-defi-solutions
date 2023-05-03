@@ -88,7 +88,7 @@ describe('[Challenge] Wallet mining', function () {
         const MASTER_COPY = "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F";
 
         /** SET RPC URL HERE */
-        const MAINNET_URL = "Enter your RPC URL here";
+        const MAINNET_URL = "<enter your RPC URL here>";
         const mainnetProvider = new ethers.providers.JsonRpcProvider(MAINNET_URL);
 
         const transactions = [
