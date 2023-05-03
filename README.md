@@ -110,8 +110,6 @@ Javascript: [test/climber/climber.challenge.js](https://github.com/mikle97pir/da
 
 Attacker smart contract: [contracts/player-contracts/ClimberAttacker.sol](https://github.com/mikle97pir/damn-vulnerable-defi-solutions/blob/v3.0.0-solutions/contracts/player-contracts/ClimberAttacker.sol)
 
-Sure, here is an improved version of that part:
-
 ### **13. Wallet Mining**
 
 A good walkthrough for the Wallet Mining challenge is available on [Medium](https://systemweakness.com/damn-vulnerable-defi-v3-13-wallet-mining-solution-d5147533fa49) by [@bowenzby](https://medium.com/@bowenzby).
